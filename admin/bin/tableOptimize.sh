@@ -1,3 +1,3 @@
 #!/bin/sh
 
-php -f /var/www/push/public/index.php tb
+php -f /var/www/admin/public/index.php tb

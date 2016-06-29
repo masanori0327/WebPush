@@ -30,10 +30,10 @@ return [
         
     'api' => [
         'google' => [
-            'client_id' => '20214841620-dbuut55uv1ln139v5pgsr2op1eeguv27.apps.googleusercontent.com',
-            'client_secret' => 'n0t7-C-14E4E8ZBJfL0b4ruQ',
+            'client_id' => '',
+            'client_secret' => '',
             'scope' => 'https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile',
-            'callback' => 'http://push2.jp/push/user/callback'
+            'callback' => 'http://{domain}/push/user/callback'
         ]
     ]
 ];

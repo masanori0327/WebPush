@@ -1,0 +1,18 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# Get Notification
+GET     /pf/notification/get          controllers.api.Notification.get()
+# Show Notification
+GET     /pf/notification/show         controllers.api.Notification.show()
+# Click Notification
+GET     /pf/notification/click        controllers.api.Notification.click()
+# Error Notification
+GET     /pf/notification/error        controllers.api.Notification.error()
+
+# Home page
+GET     /                           controllers.Application.index
+
+# Map static resources from the /public folder to the /assets URL path
+GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)

@@ -1,3 +1,3 @@
 #!/bin/sh
 
-php -f /var/www/push/public/index.php sp
+php -f /var/www/admin/public/index.php sp
