@@ -1,0 +1,93 @@
+<?php include(dirname(__FILE__) . '/../nav-tabs.phtml'); ?>
+
+<div class="well">
+    <div class="row">
+        <div class="col-md-12">
+            <?php if(!$this->history || count($this->history) <= 0):?>
+                <div class="alert alert-info">
+                    履歴がありません
+                </div>
+            <?php else:?>
+                <table id="table" class="table table-bordered table-condensed table-hover">
+                    <thead>
+                        <tr>
+                            <th class="text-center">通知イメージ</th>
+                            <th class="text-center">送信数</th>
+                            <th class="text-center">閲覧数</th>
+                            <th class="text-center">クリック数</th>
+                            <th class="text-center">送信日時</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach($this->history as $row):?>
+                            <tr>
+                                <td width="50%" style="padding: 15px;">
+                                    <table class="table table-bordered" style="margin-bottom: 0;">
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <div class="row">
+                                                        <div class="col-md-3">
+                                                            <br><br>
+                                                            <span class="text-muted">画像アイコン</span>
+                                                        </div>
+                                                        <div class="col-md-9">
+                                                            <br>
+                                                            <p><?php echo $this->escapeHtml($row->title);?></p>
+                                                            <p><?php echo $this->escapeHtml($row->message);?></p>
+                                                            <p class="text-muted"><?php echo $this->escapeHtml($row->link);?></p>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                                <td class="text-right"><?php echo number_format($row->count);?></td>
+                                <td class="text-right"><?php echo number_format($row->show_count);?></td>
+                                <td class="text-right"><?php echo number_format($row->click_count);?></td>
+                                <td class="text-center"><?php echo $row->add_datetime;?></td>
+                            </tr>
+                        <?php endforeach;?>
+                    </tbody>
+                </table>
+                <style>
+                .dataTables_filter > label{
+                    font-family: FontAwesome;
+                }
+                </style>
+                <link rel="stylesheet" type="text/css" href="/css/dataTables.bootstrap.css"/>
+                <script type="text/javascript" src="/js/jquery.dataTables.min.js"></script>
+                <script type="text/javascript" src="/js/dataTables.bootstrap.js"></script>
+                <script>
+                $(document).ready(function(){
+                    table = $('#table').DataTable({
+                        sort: false,
+                        
+                        "language": {
+                            "paginate": {
+                                "previous": "<",
+                                "next": ">"
+                            },
+                            "search": "&#xf002;検索",
+                            "lengthMenu": "表示数 _MENU_",
+                            "zeroRecords": "レコードがありません",
+                            "info": "\_TOTAL\_ レコード中（\_START\_ ～ \_END\_）",
+                            "infoEmpty": "該当レコードがありません",
+                            "emptyTable": "レコードが存在しません"
+                        },
+                    });
+                });
+                </script>
+            <?php endif;?>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6 col-md-offset-3">
+        <div class="text-center">
+            <a href="/" class="btn btn-block btn-default"><i class="fa fa-angle-double-left"></i>&nbsp;戻る</a>
+        </div>
+    </div>
+</div>

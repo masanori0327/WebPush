@@ -1,0 +1,20 @@
+<ul class="nav nav-tabs">
+<?php if($this->user['gcm_key'] && $this->user['gcm_project_number']):?>
+    <li class="<?php if($this->action === 'push'):?>active<?php endif?>">
+        <a class="redirect" href="/push/push/push">
+            プッシュする
+        </a>
+    </li>
+    <li class="<?php if($this->action === 'history'):?>active<?php endif?>">
+        <a class="redirect" href="/push/push/history">
+            プッシュ履歴を見る
+        </a>
+    </li>
+<?php endif;?>
+    <li class="<?php if($this->action === 'gcm'):?>active<?php endif?>">
+        <a class="redirect" href="/push/push/gcm">
+            プロジェクト番号とAPIキーの設定
+        </a>
+    </li>
+</ul>
+

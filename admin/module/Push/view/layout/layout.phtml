@@ -1,0 +1,106 @@
+<?php echo $this->doctype(); ?>
+
+<html lang="ja">
+    <head>
+        <meta charset="utf-8">
+        <?php echo $this->headTitle('プッシュ')->setSeparator(' - ')->setAutoEscape(false) ?>
+
+        <?php echo $this->headMeta()
+            ->appendName('viewport', 'width=device-width, initial-scale=1.0')
+            ->appendHttpEquiv('X-UA-Compatible', 'IE=edge')
+        ?>
+
+        <!-- Le styles -->
+        <?php echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/favicon.ico'))
+            ->prependStylesheet($this->basePath() . '//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css', 'all')
+            ->prependStylesheet($this->basePath() . '/css/bootstrap.min.css', 'all')
+            ->prependStylesheet($this->basePath() . '/css/font-awesome.min.css', 'all')
+            ->prependStylesheet($this->basePath() . 'https://fonts.googleapis.com/icon?family=Material+Icons', 'all');
+        ?>
+
+        <!-- Scripts -->
+        <?php echo $this->headScript()
+            ->prependFile($this->basePath() . '/js/common.js')
+            ->prependFile($this->basePath() . '/js/bootstrap.min.js')
+            ->prependFile($this->basePath() . '/js/jquery.min.js')
+            ->prependFile($this->basePath() . '/js/respond.min.js', 'text/javascript', array('conditional' => 'lt IE 9',))
+            ->prependFile($this->basePath() . '/js/html5shiv.js',   'text/javascript', array('conditional' => 'lt IE 9',))
+        ; ?>
+        
+        <?php if(isset($this->action) && $this->action === 'allow-notification'):?>
+            <link rel="manifest" href="/push/test/manifest.json">
+        <?php endif;?>
+        
+    </head>
+    <body>
+        <header>
+            <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+                <div class="container-fluid">
+                    <div class="collapse navbar-collapse">
+                        <ul class="nav navbar-nav navbar-right">
+                            <?php if($this->user):?>
+                                <li><a href="/push/user/sign-out"><i class="fa fa-sign-out"></i>&nbsp;ログアウト</a></li>
+                            <?php endif;?>
+                        </ul>
+                    </div><!--/.nav-collapse -->
+                </div>
+            </nav>
+        </header>
+
+        <div class="col-md-12">
+            <?php echo $this->content; ?>
+        </div><!-- /container -->
+        <div class="col-md-12" id="footer">
+            <div class="row">
+                <footer class="text-center">
+                    <p>&copy; Sample</p>
+                </footer>
+            </div>
+        </div>
+        <?php echo $this->inlineScript() ?>
+        
+        <style>
+        body {
+            padding-top: 70px;
+            padding-bottom: 40px;
+        }
+        .page-header {
+            margin-top:0;
+        }
+        
+        #loading{
+            display:none;
+            width:48px;
+            height:48px;
+            position:fixed;
+            _position: absolute; /* forIE6 */
+            top:50%;
+            left:50%;
+            margin-top: -24px;
+            margin-left: -24px;
+            z-index: 10001;
+        }
+        #loading-shadow{
+            opacity: 0.6;
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 120%;
+            min-height:100%;
+            background: #fff;
+            z-index: 10000;
+        }
+        </style>
+        <div id="loading"><i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span></div>
+        <div id="loading-shadow"></div>
+        
+        <script type="text/javascript">
+        $('.redirect').click(function(){
+            $('#loading-shadow').fadeIn();
+            $('#loading').fadeIn();
+        });
+        </script>
+    </body>
+</html>

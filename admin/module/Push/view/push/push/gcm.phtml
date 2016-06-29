@@ -1,0 +1,73 @@
+<?php include(dirname(__FILE__) . '/../nav-tabs.phtml'); ?>
+
+<div class="well" style="border-top:none;">
+    <div class="row">
+        <div class="col-md-offset-3 col-md-6">
+            <p>
+            <a href="https://console.developers.google.com" target="_blank">Google Developers Console &nbsp;<i class="fa fa-external-link"></i></a>&nbsp;で「新しいプロジェクト」を作成、Google API「Google Cloud Messaging」を有効にして、プロジェクト番号とAPIキーを取得してください。<br>
+            <br>
+            取得したプロジェクト番号とAPIキーを以下に入力してください。
+            </p>
+        </div>
+        
+        <div class="col-md-offset-3 col-md-6">
+            <form id="gcm_form" action="/push/push/gcm-setting" enctype="multipart/form-data" method="post">
+                <div class="row">
+                    <div class="text-left col-md-6" style="font-weight:bold;">
+                        プロジェクト番号
+                    </div>
+                </div>
+                <div class="row">
+                    <div id="project_form" class="col-md-12 form-group">
+                        <input type="text" id="project" name="project" value="<?php echo ($this->user['gcm_project_number']) ?>" class="form-control" placeholder="プロジェクト番号を入力してください">
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="text-left col-md-6" style="font-weight:bold;">
+                        APIキー
+                    </div>
+                </div>
+                <div class="row">
+                    <div id="key_form" class="col-md-12 form-group">
+                        <input type="text" id="key" name="key" value="<?php echo ($this->user['gcm_key']) ?>" class="form-control" placeholder="APIキーを入力してください">
+                    </div>
+                </div>
+                
+                <div class="row" style="margin-top:20px;">
+                    <div class="col-md-12">
+                        <button type="submit" id="submit_button" data-loading-text="設定中..." class="btn btn-primary btn-block btn-state">設定を保存して次へ&nbsp;<i class="fa fa-arrow-circle-right"></i></button>
+                    </div>
+                </div>
+            </form>
+            
+        </div>
+    </div>
+</div>
+
+<script>
+$('#gcm_form').submit(function(){
+    var error_flg = false;
+    $('#project_form').removeClass('has-error');
+    $('#key_form').removeClass('has-error');
+
+    var project = $('#project').val();
+    if(project.length <= 0){
+        error_flg = true;
+        $('#project_form').addClass('has-error');
+    }
+    var key = $('#api').val();
+    if(key.length <= 0){
+        error_flg = true;
+        $('#key_form').addClass('has-error');
+    }
+
+    if(error_flg){
+        $('#submit_button').button('reset');
+        return false;
+    }
+
+    $('#loading-shadow').fadeIn();
+    $('#loading').fadeIn();
+});
+</script>

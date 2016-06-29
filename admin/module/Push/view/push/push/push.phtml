@@ -1,0 +1,106 @@
+<?php include(dirname(__FILE__) . '/..//nav-tabs.phtml'); ?>
+
+<div class="well">
+    <div class="row">
+        <div class="col-md-offset-3 col-md-6">
+            <form id="send_form" action="/push/push/send" enctype="multipart/form-data" method="post" style="margin-top: -10px;">
+                <div class="row">
+                    <div class="text-left col-md-6" style="font-weight:bold;">タイトル</div>
+                    <div class="text-right col-md-6">
+                        <span id="title_count">36</span>/36
+                    </div>
+                </div>
+                <div class="row">
+                    <div id="title_form" class="col-md-12 form-group">
+                        <input type="text" id="title" name="title" value="" class="form-control" placeholder="タイトルを入力してください">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="text-left col-md-6" style="font-weight:bold;">メッセージ</div>
+                        <div class="text-right col-md-6">
+                            <span id="msg_count">80</span>/80
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div id="msg_form" class="col-md-12 form-group">
+<textarea id="msg" name="msg" class="form-control" placeholder="メッセージを入力してください">
+</textarea>
+                        </div>
+                    </div>
+                <div class="row">
+                    <div class="text-left col-md-6" style="font-weight:bold;">リンクURL</div>
+                </div>
+                <div class="row">
+                    <div id="link_form" class="col-md-12 form-group">
+                        <input type="text" id="link" name="link" value="" class="form-control" placeholder="https://google.co.jp/">
+                        <p id="link_msg" class="text-danger"></p>
+                    </div>
+                </div>
+                
+                <div class="row" style="margin-top:20px;">
+                    <div class="col-md-12">
+                        <button type="submit" id="submit_button" data-loading-text="設定中..." class="btn btn-primary btn-block btn-state"><i class="fa fa-envelope"></i>&nbsp;送信</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+$('#title').bind('keydown keyup keypress change', function(){
+    var thisValueText = $(this).val();
+    var thisValueLength = $(this).val().length;
+    var valueLength = 36-thisValueLength;
+    $('#title_count').html(valueLength);
+});
+
+$('#msg').bind('keydown keyup keypress change', function(){
+    var thisValueText = $(this).val();
+    var thisValueLength = $(this).val().length;
+    var valueLength = 80-thisValueLength;
+    $('#msg_count').html(valueLength);
+});
+
+// validate
+$("#send_form").submit(function() {
+    var error_flg = false;
+    $('#title_form').removeClass('has-error');
+    $('#msg_form').removeClass('has-error');
+    $('#link_form').removeClass('has-error');
+    $('#link_msg').html('');
+
+    var title_count = $('#title_count').text();
+    var title = $('#title').val().trim();
+    if(title_count <= 0 || title_count >= 36 || title.length <= 0){
+        error_flg = true;
+        $('#title_form').addClass('has-error');
+    }
+
+    var msg_count = $('#msg_count').text();
+    var msg = $('#msg').val().trim();
+    if(msg_count <= 0 || msg_count >=80 || msg.length <= 0){
+        error_flg = true;
+        $('#msg_form').addClass('has-error');
+    }
+
+    var link = $('#link').val();
+    if(link.length <= 0){
+        error_flg = true;
+        $('#link_form').addClass('has-error');
+    }else if(!link.match(/^https?(:\/\/[-_.!~*\'()a-zA-Z0-9;\/?:\@&=+\$,%#]+)$/i)){
+        error_flg = true;
+        $('#link_form').addClass('has-error');
+        var msg = "<code>http(s)://google.co.jp</code>などの形式で入力してください";
+        $('#link_msg').html(msg);
+    }
+
+    if(error_flg){
+        $('#submit_button').button('reset');
+        return false;
+    }
+
+    $('#loading-shadow').fadeIn();
+    $('#loading').fadeIn();
+});
+</script>
